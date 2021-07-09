@@ -1,4 +1,5 @@
-﻿using Scte35Monitor.Vo;
+﻿using MaterialDesignThemes.Wpf;
+using Scte35Monitor.Vo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -94,6 +95,15 @@ namespace Scte35Monitor
                 await Task.Delay(ts);
                 Debug.WriteLine("service is alive");
             }
+        }
+
+        private void ClosingServerDialog(object sender, DialogClosingEventArgs eventArgs)
+        {
+        }
+
+        private void BtnServerAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var result = DialogHost.Show("DialogServer");
         }
     }
 }

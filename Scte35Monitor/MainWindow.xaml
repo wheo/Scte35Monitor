@@ -10,8 +10,7 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
         Loaded="Window_Loaded"
-        Background="{DynamicResource MaterialDesignPaper}"
-        Title="Goup SCTE35 Monitor" Height="1040" Width="1920">
+        Title="SCTE35 Monitor" Height="1040" Width="1920">
 
     <Window.Resources>
         <FontFamily x:Key="NotoSans-Regular">
@@ -34,16 +33,65 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="200" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="300" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="210" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <materialDesign:DialogHost Identifier="DialogServer" BorderBrush="{DynamicResource MaterialDesignDivider}" VerticalAlignment="Center"
+                                   DialogClosing="ClosingServerDialog" HorizontalAlignment="Center">
+            <materialDesign:DialogHost.DialogContentTemplate>
+                <DataTemplate>
+                    <Grid Width="400" Height="200">
+                        <StackPanel Orientation="Horizontal" Margin="15">
+                            <materialDesign:PackIcon Kind="InfoOutline" Width="50" Height="50" />
+                            <StackPanel>
+                                <TextBox MaxWidth="200" Text="{Binding UnitName, UpdateSourceTrigger=LostFocus}" materialDesign:HintAssist.Hint="장비 이름"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         FontSize="18"
+                                         FontFamily="{StaticResource NotoSans-Regular}" />
+                                <TextBox MaxWidth="200"
+                                         Text="{Binding Ip}"
+                                         materialDesign:HintAssist.Hint="IP"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         FontSize="18"
+                                         FontFamily="{StaticResource NotoSans-Regular}" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
+                            <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                    Margin="4" VerticalAlignment="Center">
+                                <Button.CommandParameter>
+                                    <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">False</system:Boolean>
+                                </Button.CommandParameter>
+                                취소
+                            </Button>
+                            <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                    Margin="4" VerticalAlignment="Center">
+                                <Button.CommandParameter>
+                                    <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">True</system:Boolean>
+                                </Button.CommandParameter>
+                                입력
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </materialDesign:DialogHost.DialogContentTemplate>
+        </materialDesign:DialogHost>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Button x:Name="BtnServerAdd" HorizontalAlignment="Center" Margin="10,0,0,0" IsEnabled="true" Padding="4,0,4,0" Click="BtnServerAdd_Click">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ServerPlus" Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="장비추가" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
 
         <DockPanel Grid.Row="1" Grid.Column="0">
             <TreeView Name="myTreeViewEvent"  FontSize="10" FontFamily="{StaticResource NotoSans-Regular}">
@@ -73,19 +121,6 @@
         <GridSplitter Grid.Row="1" Grid.Column ="1" Background="Silver" Width="2" ShowsPreview="False" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
         <DockPanel  Grid.Row="1" Grid.Column="2">
-            <!--
-            <Canvas x:Name="cnvPanel" Panel.ZIndex="10">
-                <Thumb Canvas.Left="100" Canvas.Top="60" DragDelta="Thumb_DragDelta" MouseDoubleClick="thumb_MouseDoubleClick" Cursor="Hand">
-                    <Thumb.Template>
-                        <ControlTemplate>
-                            <Border Style="{StaticResource ResourceKey=BorderVisibleOnMouse}">
-                    <Label Content="blabla test" FontFamily="{StaticResource NotoSans-Black}" FontSize="20" />
-                    </Border>
-                    </ControlTemplate>
-                    </Thumb.Template>
-                    </Thumb>
-                    </Canvas>
-                    -->
             <StackPanel>
                 <ListView x:Name="ServerListItem" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="Visible"
                         BorderThickness="10" BorderBrush="Red" Panel.ZIndex="1">
